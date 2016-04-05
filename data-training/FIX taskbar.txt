@@ -1,0 +1,6 @@
+Press Windows Key + R on your keyboard.
+Key in PowerShell and hit Enter.
+Right click on the PowerShell icon on the taskbar and select Run as Administrator.
+Now paste the following command in the Administrator: Windows PowerShell window and press Enter key:
+Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
+NOW for the important part ! Locate to :  C:/Users/name/AppData/Local/ and delete the TileDataLayer folder. Should fix everything immediately, no reboot necessary. Let me know how it works for you, it did for me! And remember to clean the recycle bin after you deleted the folder and give it 1min then everything is back to normal !

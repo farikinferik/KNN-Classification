@@ -9,12 +9,12 @@
 		$id_class = $document->getClassId($class);
 		
 		if($id_class){
-			$id_doc = $document->addDoc($id_class, $title, $content, $content);		
+			$id_doc = $document->addDoc($id_class, $title, $abstract);		
 		} else {
 			$id_class = $document->addClass($class);
-			$id_doc = $document->addDoc($id_class, $title, $abstract, $content);
+			$id_doc = $document->addDoc($id_class, $title, $abstract);
 		}
-		$docPrep = new DocumentPreprosessing($content);
+		$docPrep = new DocumentPreprosessing($abstract);
 		$terms = $docPrep->getDocPrep();
 
 		$allterm = new AllTerms();
@@ -25,8 +25,6 @@
 			$msg = "Berhasil Input Data";
 		}		
 	}
-
-	
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,19 +69,58 @@
 					    	<input type="text" class="form-control" name="title" id="title" placeholder="Masukkan Judul">
 				    	</div>
 				    	<div class="form-group">
-					    	<label class="control-label" for="abstract">Abstrak </label>
-					    	<textarea class="form-control" name="abstract" id="abstract" rows="3" placeholder="Masukkan abstrak"></textarea>
-				    	</div>
-				    	<div class="form-group">
-					    	<label class="control-label" for="content">Konten </label>
-					    	<textarea class="form-control" name="content" id="content" rows="6" placeholder="Masukkan Teks yang akan diklasifikasi"></textarea>
+					    	<label class="control-label" for="content">Abstrak </label>
+					    	<textarea class="form-control" name="abstract" id="content" rows="6" placeholder="Input teks yang akan diklasifikasi"></textarea>
 				    	</div>
 				    	<input type="submit" class="btn btn-primary"  name="input" value="Submit">
-				    	<input type="reset" class="btn btn-default" value="Reset"></input>
+				    	<input type="reset" class="btn btn-default" value="Reset">
 				    </form>
-
-	 				
 				</div>
+				<?php
+		 			if(isset($result)){
+		 				echo '
+					    <ul class="nav nav-tabs">
+							<li class="active"><a href="#">Result</a></li>
+							<li><a href="vsm.php">Trace</a></li>
+						</ul>
+		 				<div class="alert alert-info fade in">
+						   	<a href="#" class="close" data-dismiss="alert">&times;</a>
+						    <strong> Dokumen : <br>'.$content.' </strong>
+						</div>
+						<div class="alert alert-success fade in">
+						   	<a href="#" class="close" data-dismiss="alert">&times;</a>
+						    <strong> Kelas : '.$result.' </strong>
+						</div>
+						<div class="alert alert-info fade in">
+						   	<a href="#" class="close" data-dismiss="alert">&times;</a>
+						    <strong> Jumlah K : '.$classific->getK().' </strong>
+						</div>';
+			 			echo '<table class="table table-bordered">
+						    	<tr>
+						    		<th>ID Dokumen</th>
+						    		<th>Jarak</th>
+						    		<th>Kelas</th>
+						    	</tr>';
+						$i = $classific->getK();
+			 			foreach ($distance as $key => $value) {			
+			    			if($i > 0){
+				    			echo '<tr>
+			    				<td>'.$key.'</td>
+			    				<td>'.$value.'</td>
+			    				<td class="success">'.$classific->getClass($key).'</td>
+			    				</tr>';				    				
+			    			} else {
+			    				echo '<tr>
+			    				<td>'.$key.'</td>
+			    				<td>'.$value.'</td>
+			    				<td>'.$classific->getClass($key).'</td>
+			    				</tr>';
+			    			}
+			    			$i--;
+				    	}
+				    	echo '</table>';
+		 			}
+ 				?>
 			</div>
 		</div>
 	</div>

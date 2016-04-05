@@ -1,7 +1,5 @@
 <?php
     require_once 'Connection.php';
-
-	
     class DocumentTraining extends Connection {
 
         public function addClass($name){
@@ -32,14 +30,13 @@
                 return false;
             }
         }
-        public function addDoc($id_class, $title, $abstract, $content){
+        public function addDoc($id_class, $title, $abstract){
             try{
-                $sql = "INSERT INTO document_training VALUES(NULL, :id_class, :title, :abstract, :content)";
+                $sql = "INSERT INTO document_training VALUES(NULL, :id_class, :title, :abstract)";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute(array(':id_class'=>$id_class,
                                     ':title'=>$title,
-                                    ':abstract'=>$abstract,
-                                    ':content'=>$content));
+                                    ':abstract'=>$abstract));
                 $id = $this->conn->lastInsertId('id_doc');
                 if($id)
                     return $id;
@@ -59,15 +56,18 @@
                 while($r = $sel_stmt->fetch(PDO::FETCH_ASSOC)) {
                     $result[] = $r;
                 }
+                $ins_stmt = $this->conn->prepare("INSERT INTO term_freq VALUES(NULL, :id_doc, :id_term, :freq)");
+                $this->conn->beginTransaction();
                 foreach ($result as $key => $value) {
                     extract($value);
                     if(array_key_exists($term, $count)){
                         $freq = $count[$term];                        
-                        $ins_stmt = $this->conn->prepare("INSERT INTO term_freq VALUES(NULL, :id_doc, :id_term, :freq)");
                         $ins_stmt->execute(array(':id_doc'=>$id_doc, ':id_term'=>$id_term, ':freq'=>$freq));
                     }
 
                 }
+                $this->conn->commit();
+
                 return true;
             }catch(PDOException $e){
                 echo $e->getMessage();
@@ -75,5 +75,4 @@
             }
         }
 	}
-
-?>
+?>

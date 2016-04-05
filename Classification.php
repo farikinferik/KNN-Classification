@@ -17,6 +17,8 @@
             }
 
             $k = $this->k;
+
+            $similar = 0;
         	do{
         		if($k > $this->k){
         			$this->k = $k;
@@ -25,8 +27,20 @@
 	            $classes = array_count_values($kClasses);
 	            $max = max($classes);
 	            $class = array_search($max, $classes);
-	            $k += 2; 
-            }while(count(array_unique($kClasses)) == $this->k && $count >= $this->k);
+	            
+
+	            //mencari kemungkinan kelas max yang jumlahnya sama
+	            $count = array();
+	            foreach ($classes as $key => $value) {
+	            	
+	            	if($value == $max){
+	            		array_push($count, $value);
+	            	}
+	            }
+	            $similar = count($count);//jika jumlahnya lebih dari 1 maka ada jumlah yang aama
+	            
+	            $k += 2;
+            }while((count(array_unique($kClasses)) == $this->k) && ($count >= $this->k) || ($similar > 1) && ($count >= $this->k));
 
             
             return $class;
