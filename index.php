@@ -175,7 +175,7 @@
                         <div class="panel-body">      
                           <ul class="nav nav-tabs">
                             <li class="active"><a href="#">Result</a></li>
-                            <li><a href="vsm.php">Trace</a></li>
+                            <li><a href="vsm.php" target="_blank">Trace</a></li>
                           </ul>
                           <div class="alert alert-success fade in">
                               <a href="#" class="close" data-dismiss="alert">&times;</a>

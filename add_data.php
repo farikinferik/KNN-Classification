@@ -91,7 +91,6 @@
           if($document->generateTermFreq($id_doc, $terms)){
               $doc_inserted[] = $id_doc;
           }
-          print_r($doc_inserted);
         }
         $msg = "Berhasil Input Data";
       }
@@ -227,7 +226,7 @@
                       </div>
                       <div class="panel-body">';
                         foreach ($doc_inserted as $key => $value) {
-                          echo "Berhasil input data dengan id dokumen".$value."<br>";    
+                          echo "Berhasil input data dengan id dokumen ".$value."<br>";    
                         }
                       echo '
                       </div>
