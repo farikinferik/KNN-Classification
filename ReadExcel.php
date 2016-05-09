@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 			include 'DocumentPreprosessing.php';
 			include 'AllTerms.php';
 			
-			//set_time_limit(90);
+			set_time_limit(120);
 
 			if($extension == 'xls'){
 				$inputFileType = 'Excel5';				

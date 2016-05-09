@@ -46,7 +46,7 @@
         /** PHPExcel_IOFactory */
         include 'PHPExcel/IOFactory.php';
         
-        //set_time_limit(90);
+        set_time_limit(120);
 
         if($extension == 'xls'){
           $inputFileType = 'Excel5';        
@@ -67,9 +67,10 @@
         $sheetData = $sheet->rangeToArray('A2:'.$maxCell['column'].$maxCell['row']);
         foreach ($sheetData as $key => $row) {
           
-          $data[] = array('title'=>$row['0'], 'class'=>$row['1'], 'abstract'=>$row['2']);
+          $data[] = array('title'=>$row['1'], 'class'=>$row['2'], 'abstract'=>$row['3']);
         }
         $n = count($data);
+        $msc = microtime(true);
         foreach ($data as $key => $value) {
           extract($value);
           $document = new DocumentTraining();
@@ -92,7 +93,8 @@
               $doc_inserted[] = $id_doc;
           }
         }
-        $msg = "Berhasil Input Data";
+        $msc = microtime(true) - $msc;
+        $msg = "Berhasil input data";
       }
       else
       {
@@ -104,7 +106,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Tambah Data Training</title>
   <link href="assets/css/bootstrap.css" rel="stylesheet">
   <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
@@ -225,9 +227,16 @@
                       Keterangan
                       </div>
                       <div class="panel-body">';
+                        $i = 0;
                         foreach ($doc_inserted as $key => $value) {
-                          echo "Berhasil input data dengan id dokumen ".$value."<br>";    
+                          $i++;    
                         }
+                        echo $i." Data telah ditambahkan<br>Waktu eksekusi yang diperlukan ".$msc." detik"."<br>";
+                        foreach ($document->countClass() as $key => $value) {
+                            extract($value);
+                            echo "Kelas ".$class_name." : Jumlah data ".$count."<br>";
+                        }
+                        //print_r($maxCell);              
                       echo '
                       </div>
                     </div>';                      

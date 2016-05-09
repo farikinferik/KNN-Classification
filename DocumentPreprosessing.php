@@ -18,6 +18,7 @@
             $doc = str_replace("?", " ", $doc);
             $doc = str_replace("/", " ", $doc);            
             $doc = str_replace('"', '', $doc); 
+            $doc = str_replace("  ", " ", $doc);
             return $doc;
         }
         public function stopWordRemover($doc)

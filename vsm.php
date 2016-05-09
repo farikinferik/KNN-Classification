@@ -48,7 +48,6 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<a href="test.php" class="btn btn-danger pull-right">Back</a>
 				<h3 align="center">Vector Space Model</h3>
 				<?php 
 	 				echo '<div class="alert alert-info fade in">
@@ -60,9 +59,9 @@
 			    	<tr align="center" class="info">';
 			    			echo '<th>ID</th>';
 			    			echo '<th>Term</th>';
-			    			echo '<th>Test</th>';
+			    			echo '<th>Duji</th>';
 			    		foreach($docWeight->getAllDoc() as $id_doc){
-							echo '<th>'.$id_doc.'</th>';	    			
+							echo '<th>'.'D'.$id_doc.'</th>';	    			
 			    		}
 			    			echo '<th>IDF</th>';
 			    			echo '<th>Test</th>';

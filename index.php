@@ -51,7 +51,6 @@
 
   <script type="text/javascript" src="assets/js/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-
   <style type="text/css">
     .spinner {
       width: 100px;
@@ -132,8 +131,8 @@
     </nav>
     <div class="container" style="padding-top : 60px">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Classify</a></li>
-        <li><a href="add_data.php">Add Data Training</a></li>
+        <li class="active"><a href="#">Klasifikasi</a></li>
+        <li><a href="add_data.php">Tambah Data Training</a></li>
       </ul>
       <div class="panel panel-default">
         <div class="panel-body">  

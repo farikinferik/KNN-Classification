@@ -59,9 +59,7 @@
 					if(array_key_exists($term, $this->terms)){
 						$df++; //dijumlah dengan dok testing
 					}
-					 
 					$this->idf[$term] = log(($this->n/$df), 10);
-					
 				}
 				return true;
 			}catch(PDOException $e){

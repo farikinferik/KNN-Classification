@@ -47,6 +47,21 @@
                 return false;
             }
         }
+        public function countClass(){
+            try{            
+                $stmt = $this->conn->prepare("SELECT C.class_name, COUNT(D.id_doc) AS count FROM class C LEFT JOIN document_training D ON C.id_class = D.id_class GROUP BY 1");
+                $stmt->execute();
+                while($r = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $data[] = $r;
+                }
+                
+                return $data;
+            }catch(PDOException $e)
+            {
+                echo $e->getMessage();
+                return false;
+            }
+        }
         public function generateTermFreq($id_doc, $terms){
             $count = array_count_values($terms);
             
