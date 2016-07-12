@@ -243,6 +243,9 @@
                   }
 
                 ?>
+                <div class="pull-right">
+                  <a href="reset_data.php">Reset Data Training</a>
+                </div>  
               </div>
             </div>
           </div>

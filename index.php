@@ -9,6 +9,8 @@
 
   if(isset($_POST['test'])){
     session_start();
+    echo "\n\n\n\n";
+    print_r($_POST);
     extract($_POST);
 
     $_SESSION['content'] = $content;
