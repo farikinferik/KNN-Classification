@@ -48,12 +48,12 @@
         
         set_time_limit(120);
 
-        if($extension == 'xls'){
+        if($extension == 'xls'){//untuk format excel 1999
           $inputFileType = 'Excel5';        
-        }else if($extension == 'xlsx'){
+        }else if($extension == 'xlsx'){//untuk format excel 2007 sampai versi terbaru
           $inputFileType = 'Excel2007';
         }else{
-          $inputFileType = 'CSV';
+          $inputFileType = 'CSV';//untuk file berekstensi CSV (BETA)
         }
 
         $inputFileName = $target;
@@ -231,7 +231,7 @@
                         foreach ($doc_inserted as $key => $value) {
                           $i++;    
                         }
-                        echo $i." Data telah ditambahkan<br>Waktu eksekusi yang diperlukan ".$msc." detik"."<br>";
+                        echo $i." Data telah ditambahkan<br>Waktu eksekusi yang diperlukan ".round($msc, 0)." detik"."<br>";
                         foreach ($document->countClass() as $key => $value) {
                             extract($value);
                             echo "Kelas ".$class_name." : Jumlah data ".$count."<br>";

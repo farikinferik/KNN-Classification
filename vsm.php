@@ -8,6 +8,9 @@
 	require 'EucDistance.php'; 
 	require 'Classification.php';
 
+    set_time_limit(360);
+
+
 	session_start();
 	$content = $_SESSION['content'];
 	$allterms = new AllTerms();

@@ -47,7 +47,7 @@
 				foreach ($this->allTerms as $key => $value) {
 					extract($value);
 					
-					//mencari jumlah dokumen frekuwnsi dari data training
+					//mencari jumlah dokumen frekuensi dari data training
 					$sel_stmt = $this->conn->prepare("SELECT COUNT(id_doc) AS df FROM term_freq WHERE id_term = :id_term"); 
 					
 					$sel_stmt->bindParam(':id_term', $id_term);
@@ -104,7 +104,7 @@
 				foreach ($this->allTerms as $key => $value) {
 					extract($value);
 
-					//mencari jumlah dokumen frekuwnsi dari data training
+					//mencari jumlah dokumen frekuensi dari data training
 					$sel_stmt = $this->conn->prepare("SELECT id_doc, id_term, freq FROM term_freq WHERE id_term = :id_term"); 
 					
 					$sel_stmt->bindParam(':id_term', $id_term);

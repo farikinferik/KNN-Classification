@@ -6,7 +6,7 @@
   require 'DocumentWeighting.php';
   require 'EucDistance.php'; 
   require 'Classification.php';
-  
+
   if(isset($_POST['test'])){
     session_start();
     extract($_POST);
@@ -33,12 +33,11 @@
     foreach ($docWeight->getTermsTrainWeight() as $key => $value) {
       $eucDistance = new EucDistance();
       $distance[$key] = $eucDistance->calcDistance($docWeight->getTermsTestWeight(), $value);
-
     }
     asort($distance);
     $classific =  new Classification();
     $classific->setK($k);
-    $result = $classific->classify($distance);
+    $result = "";
   }
   
 ?>
@@ -136,7 +135,7 @@
       </ul>
       <div class="panel panel-default">
         <div class="panel-body">  
-          <div class="container" id="classify">
+          <div class="container-fluid" id="classify">
             <div class="row">
               <?php
                 if(isset($msg)){
@@ -147,7 +146,7 @@
                   </div>';
                 }
               ?>  
-              <div class="col-md-6">
+              <div class="col-md-4">
                   <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <label for="k">Tentukan Nilai K</label>
                     <div class="input-group spinner">
@@ -158,31 +157,77 @@
                       </div>
                     </div>
                     <label for="content">Teks </label>
-                    <textarea class="form-control"  rows="10" name="content" id="content"></textarea>
+                    <textarea class="form-control"  rows="17" name="content" id="content" required></textarea>
                     <input type="submit" class="btn btn-danger" name="test" value="Uji">
                   </form>
               </div>
-              <div class="col-md-6">
-                
+              <div class="col-md-4">
                   <?php
                     if(isset($result)){
+                      $result = $classific->classifyAsItIs($distance);
                       echo '
                       <div class="panel panel-primary">
                         <div class="panel-heading">
-                          Hasil perhitungan jarak
+                          Perhitungan <strong>Tanpa Menambah Nilai K</strong>
                         </div>
-                        <div class="panel-body">      
+                        <div class="panel-body">
                           <ul class="nav nav-tabs">
                             <li class="active"><a href="#">Result</a></li>
                             <li><a href="vsm.php" target="_blank">Trace</a></li>
                           </ul>
                           <div class="alert alert-success fade in">
-                              <a href="#" class="close" data-dismiss="alert">&times;</a>
                               <strong> Kelas : '.$result.' </strong>
                           </div>
                           <div class="alert alert-info fade in">
-                              <a href="#" class="close" data-dismiss="alert">&times;</a>
                               <strong> Jumlah K : '.$classific->getK().' </strong>
+                          </div>';
+                          echo '<table class="table table-bordered">
+                                <tr>
+                                  <th>ID Dokumen</th>
+                                  <th>Jarak</th>
+                                  <th>Kelas</th>
+                                </tr>';
+                          $i = $classific->getK();
+                          foreach ($distance as $key => $value) {     
+                              if($i > 0){
+                                echo '<tr>
+                                <td>'.$key.'</td>
+                                <td>'.$value.'</td>
+                                <td class="success">'.$classific->getClass($key).'</td>
+                                </tr>';                   
+                              }
+                              $i--;
+                          }
+                          echo '</table>
+                        </div>
+                      </div>';
+                    }
+                  ?>
+              </div>
+              <div class="col-md-4">
+                  <?php
+                    if(isset($result)){
+                      $result = $classific->classify($distance);
+                      echo '
+                      <div class="panel panel-primary">
+                        <div class="panel-heading">
+                          Perhitungan dengan <strong>Menambah nilai K</strong>
+                        </div>
+                        <div class="panel-body">
+                          <ul class="nav nav-tabs">
+                            <li class="active"><a href="#">Result</a></li>
+                            <li><a href="vsm.php" target="_blank">Trace</a></li>
+                          </ul>
+                          <div class="alert alert-success fade in">
+                              <strong> Kelas : '.$result.' </strong>
+                          </div>
+                          <div class="alert alert-info fade in">
+                              <strong> Jumlah K : '.$classific->getK().' </strong>';
+                          if($k != $classific->getK()){
+                          echo '
+                              <p> Jumlah K ditambah karena tidak menemukan kelas yang dominan (beberapa kelas memiliki jumlah yang sama untuk k = '.$k.')</p>';                            
+                          }
+                          echo '
                           </div>';
                           echo '<table class="table table-bordered">
                                 <tr>
@@ -206,9 +251,7 @@
                       </div>';
                       }
                     ?>
-                  </div>
-                </div>
-              </div>
+              </div>    
             </div>
           </div>
         </div>
